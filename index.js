@@ -93,7 +93,7 @@ function handleCommentBtnClick(tweetId){
             tweetText: textComments
         })
         render()
-        document.getElementById(`replies-${tweetId}`).style.display = 'block'
+        document.getElementById(`replies-${tweetId}`).classList.remove('hidden')
         textComments = ''
     } 
 }
