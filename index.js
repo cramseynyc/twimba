@@ -18,6 +18,10 @@ document.addEventListener('click', function(e){
     }
     else if(e.target.dataset.comment){
         handleCommentBtnClick(e.target.dataset.comment)
+        console.log(e.target.id)
+    }
+    else if(e.target.dataset.delete){
+        handleDeleteBtnClick(e.target.dataset.delete)
     }
 })
  
@@ -89,8 +93,19 @@ function handleCommentBtnClick(tweetId){
             tweetText: textComments
         })
         render()
+        document.getElementById(`replies-${tweetId}`).style.display = 'block'
         textComments = ''
     } 
+}
+
+function handleDeleteBtnClick(tweetId){
+    const indexOfTweet = tweetsData.findIndex((tweet)=>{
+        return tweet.uuid === tweetId
+    })
+    if(tweetsData.handle === '@Scrimba'){
+        tweetsData.splice(indexOfTweet, 1)
+    }
+    render()
 }
 
 function getFeedHtml(){
@@ -121,6 +136,7 @@ function getFeedHtml(){
                             <div>
                              <p class="handle">${reply.handle}</p>
                             <p class="tweet-text">${reply.tweetText}</p>
+                            <i class="fa-solid fa-trash" data-delete-comment="${tweet.uuid}"></i>
                         </div>
                     </div>
                 </div>
@@ -130,49 +146,52 @@ function getFeedHtml(){
         
           
         feedHtml += `
-<div class="tweet">
-    <div class="tweet-inner">
-        <img src="${tweet.profilePic}" class="profile-pic">
-        <div>
-            <p class="handle">${tweet.handle}</p>
-            <p class="tweet-text" >${tweet.tweetText}</p>
-            <div class="tweet-details">
-                <span class="tweet-detail">
-                    <i class="fa-sharp fa-solid fa-comment-dots"
-                    data-reply="${tweet.uuid}"
-                    ></i>
-                    ${tweet.replies.length}
-                </span>
-                <span class="tweet-detail">
-                    <i class="fa-solid fa-heart ${likeIconClass}"
-                    data-like="${tweet.uuid}"
-                    ></i>
-                    ${tweet.likes}
-                </span>
-                <span class="tweet-detail">
-                    <i class="fa-solid fa-retweet ${retweetIconClass}"
-                    data-retweet="${tweet.uuid}"
-                    ></i>
-                    ${tweet.retweets}
-                </span>
-            </div>   
-        </div>            
-    </div>
-    <div id="replies-${tweet.uuid}" class='hidden'>
-    
-    <div class="tweet-comment">
-        <img src='images/scrimbalogo.png' class='profile-pic'/>
-        <div class='tweet-comment-inner'>
-            <p class="handle">@Scrimba</p>
-            <textarea id='comments-${tweet.uuid}' placeholder="type comment here..." class="tweet-text tweet-comment-textarea"></textarea>
-            <button class="comment-btn" data-comment="${tweet.uuid}">Comment</button>
-        </div>
-    </div>
-    
-        ${repliesHtml}
-    </div>   
-</div>
-`
+            <div class="tweet">
+                <div class="tweet-inner">
+                    <img src="${tweet.profilePic}" class="profile-pic">
+                    <div>
+                        <p class="handle">${tweet.handle}</p>
+                        <p class="tweet-text" >${tweet.tweetText}</p>
+                        <div class="tweet-details">
+                            <span class="tweet-detail">
+                                <i class="fa-sharp fa-solid fa-comment-dots"
+                                data-reply="${tweet.uuid}"
+                                ></i>
+                                ${tweet.replies.length}
+                            </span>
+                            <span class="tweet-detail">
+                                <i class="fa-solid fa-heart ${likeIconClass}"
+                                data-like="${tweet.uuid}"
+                                ></i>
+                                ${tweet.likes}
+                            </span>
+                            <span class="tweet-detail">
+                                <i class="fa-solid fa-retweet ${retweetIconClass}"
+                                data-retweet="${tweet.uuid}"
+                                ></i>
+                                ${tweet.retweets}
+                            </span>
+                            <span class="tweet-detail">
+                            <i class="fa-solid fa-trash" data-delete="${tweet.uuid}"></i>
+                            </span>
+                        </div>   
+                    </div>            
+                </div>
+
+                <div id="replies-${tweet.uuid}" class='hidden'>
+                    <div class="tweet-comment">
+                        <img src='images/scrimbalogo.png' class='profile-pic'/>
+                        <div class='tweet-comment-inner'>
+                            <p class="handle">@Scrimba</p>
+                            <textarea id='comments-${tweet.uuid}' placeholder="type comment here..." class="tweet-text tweet-comment-textarea"></textarea>
+                            <button id='comment-btn' class="comment-btn" data-comment="${tweet.uuid}">Comment</button>
+                        </div>
+                    </div>
+                
+                    ${repliesHtml}
+                </div>   
+            </div>
+            `
    })
    return feedHtml 
 }

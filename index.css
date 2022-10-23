@@ -104,7 +104,7 @@ button{
     display: flex;
     font-size: 13px;
     justify-content: space-between;
-    width: 160px;
+    width: 200px;
 }
 
 .tweet-detail{
