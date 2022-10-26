@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+
 export const tweetsData = [   
     {
         handle: `@TrollBot66756542 💎`,
@@ -22,11 +24,13 @@ export const tweetsData = [
                 handle: `@TomCruise ✅`,
                 profilePic: `images/tcruise.png`,
                 tweetText: `Yes! Sign me up! 😎🛩`,
+                replyId: uuidv4()
             },
                   {
                 handle: `@ChuckNorris ✅`,
                 profilePic: `images/chucknorris.jpeg`,
                 tweetText: `I went last year😴`,
+                replyId: uuidv4()
             },
         ],
         isLiked: false,
@@ -44,11 +48,13 @@ export const tweetsData = [
                 handle: `@StackOverflower ☣️`,
                 profilePic: `images/overflow.png`,
                 tweetText: `No. Obviosuly not. Go get a job in McDonald's.`,
+                replyId: uuidv4()
             },
             {
                 handle: `@YummyCoder64`,
                 profilePic: `images/love.png`,
                 tweetText: `You are wonderful just as you are! ❤️`,
+                replyId: uuidv4()
             },
         ],
         isLiked: false,
